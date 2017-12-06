@@ -88,6 +88,43 @@ class SnowFlake:
         self.branch(new_point, new_length, right_angle)
 
 
+class KochFlake:
+    def __init__(self, point, length):
+        self.edges = []
+        self.start(point, length)
+
+    def start(self, point, length):
+        angle = -math.pi/3
+
+        for i in range(3):
+            self.edge(point, length, angle)
+            new_point = move_point(point, length, angle)
+            angle += math.pi*2/3
+            point = new_point
+
+    def edge(self, point, length, angle):
+        fifth_vertex = move_point(point, length, angle)
+
+        if length < 5:
+            self.edges.append(Edge(length, point, fifth_vertex))
+            return
+
+        new_length = length/3
+        self.edge(point, new_length, angle)
+
+        second_vertex = move_point(point, new_length, angle)
+        angle -= math.pi/3
+        self.edge(second_vertex, new_length, angle)
+
+        third_vertex = move_point(second_vertex, new_length, angle)
+        angle += math.pi*2/3
+        self.edge(third_vertex, new_length, angle)
+
+        fourth_vertex = move_point(third_vertex, new_length, angle)
+        angle -= math.pi/3
+        self.edge(fourth_vertex, new_length, angle)
+
+
 def move_point(point, distance, angle):
     return point[0] + math.cos(angle) * distance, point[1] + math.sin(angle) * distance
 
@@ -105,3 +142,6 @@ export_SVG("Spiral", tree.branches, (600, 650))
 
 flake = SnowFlake((250, 250), 200)
 export_SVG("Snowflake", flake.branches, (500, 500))
+
+koch = KochFlake((20, 165), 180)
+export_SVG("Kochflake", koch.edges, (220, 220))
