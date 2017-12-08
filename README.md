@@ -7,7 +7,7 @@ Spiral fractal with changing direction
 ## Snowflakes
 Randomly generated snowflakes
 
-!(Snowflakes.png)
+![Snowflakes](Snowflakes.png)
 
 ## Koch snowflake
 Basic Koch snowflake
