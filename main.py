@@ -58,10 +58,10 @@ class Snowflake:
     def star(self, point, length):
         """ Create the initial wings of the snowflake """
         for i in range(self.N_OF_INITIAL_WINGS):
-            self.branch(point, length, -math.pi / 2 + i * 2 * math.pi / self.N_OF_INITIAL_WINGS)
+            self.wing(point, length, -math.pi / 2 + i * 2 * math.pi / self.N_OF_INITIAL_WINGS)
 
-    def branch(self, point, length, angle):
-        """ The recursive algorithm: edges on both sides of the bigger edge,
+    def wing(self, point, length, angle):
+        """ The recursive algorithm: wings on both sides of the bigger wing,
         with increasing and then decreasing length """
         if length < 1:
             return
@@ -74,17 +74,17 @@ class Snowflake:
             for side in (1, -1):
                 new_point = move_point(point, length/2 + side * i * length / (2 * self.N_OF_SUBWINGS), angle)
                 new_length = length * self.LENGTH_CHANGE / (self.LENGTH_FACTOR_1 + self.LENGTH_FACTOR_2 * i)
-                self.create_sub_branches(new_point, new_length, angle)
+                self.create_subwings(new_point, new_length, angle)
 
                 # don't draw the center wing again
                 if i == 0:
                     break
 
-    def create_sub_branches(self, new_point, new_length, angle):
-        """ Create left and right wing of the snowflake """
+    def create_subwings(self, new_point, new_length, angle):
+        """ Create left and right subwing of the snowflake """
         for direction in (1, -1):
             new_angle = angle + direction * self.ANGLE
-            self.branch(new_point, new_length, new_angle)
+            self.wing(new_point, new_length, new_angle)
 
 
 class KochFlake:
